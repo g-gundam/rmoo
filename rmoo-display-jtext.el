@@ -58,7 +58,7 @@ jtext-tagged text to the read function."
 
 (mapcar 'make-face jtext-header-faces)
 (mapcar (lambda (face)
-	  (set-face-underline-p face t))
+	  (set-face-underline face t))
 	jtext-header-faces)
 
 (defun jtext-header-action-1 (start end)
