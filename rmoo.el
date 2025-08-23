@@ -3,6 +3,8 @@
 ;; Original Author: Ron Tapia <tapia@nmia.com>
 ;;                  Matthew Campbell <mattcampbell@pobox.com>
 ;;                  lisdude <lisdude@lisdude.com>
+;; Version: 1.3
+;; Package-Requires: ((xterm-color "2.0"))
 ;;
 (provide 'rmoo)
 (require 'cl-lib)
