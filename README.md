@@ -11,17 +11,17 @@ The simplest way to install, in my opinion:
 1. `git clone https://github.com/lisdude/rmoo.git ~/.emacs.d/rmoo`
 2. `git clone https://github.com/atomontage/xterm-color.git ~/.emacs.d/xterm-color`
 3. Add the following to your configuration file:
-```
-(add-to-list 'load-path "~/.emacs.d/xterm-color")
-(add-to-list 'load-path "~/.emacs.d/rmoo")
-(require 'rmoo-autoload)
-(require 'moocode-mode)
-(require 'coldc-mode)
-(global-set-key (kbd "C-c C-r") 'rmoo)
-(add-to-list 'auto-mode-alist '("\\.moo$" . moocode-mode))
-(add-hook 'rmoo-interactive-mode-hooks (lambda ()
-(linum-mode -1)                  ;; ... no line numbers
-(goto-address-mode t)))          ;; ... clickable links
+```lisp
+(use-package rmoo
+  :vc (:url "https://github.com/g-gundam/rmoo" :branch "master")
+  :demand t
+  :bind (("C-c C-r" . rmoo))
+  :hook ((rmoo-interactive-mode . goto-address-mode))
+  :config
+  (require 'rmoo-autoload)
+  (require 'moocode-mode)
+  (require 'coldc-mode)
+  (add-to-list 'auto-mode-alist '("\\.moo$" . moocode-mode)))
 ```
 
 ### World Management
