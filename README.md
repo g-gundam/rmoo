@@ -12,11 +12,18 @@ The simplest way to install, in my opinion:
 2. `git clone https://github.com/atomontage/xterm-color.git ~/.emacs.d/xterm-color`
 3. Add the following to your configuration file:
 ```lisp
+;; Note that the :vc keyword requires Emacs 30+.
+;; If you have an older Emacs, you have to clone it yourself
+;;   and use :load-path to point to it.
+;; (info "(use-package) Load path")
 (use-package rmoo
   :vc (:url "https://github.com/g-gundam/rmoo" :branch "master")
   :demand t
   :bind (("C-c C-r" . rmoo))
-  :hook ((rmoo-interactive-mode . goto-address-mode))
+  :init
+  ;; rmoo uses plural hooks, so I can't use use-package's :hook which assumes singular.
+  (add-hook 'rmoo-interactive-mode-hooks #'goto-address-mode)
+  (add-hook 'rmoo-interactive-mode-hooks (lambda () (electric-pair-mode -1)))
   :config
   (require 'rmoo-autoload)
   (require 'moocode-mode)
