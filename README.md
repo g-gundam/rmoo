@@ -7,15 +7,12 @@ When prefixed with a C-, that means hold down CTRL and the letter following C-. 
 When prefixed with an M-, that means your meta key. Typically this is your Windows or Option key. e.g. `M-x` means to hold down meta while pressing x. (This will often be followed by a full string. M-x allows you to run commands by typing them in.)
 
 ### Installation
-The simplest way to install, in my opinion:
-1. `git clone https://github.com/lisdude/rmoo.git ~/.emacs.d/rmoo`
-2. `git clone https://github.com/atomontage/xterm-color.git ~/.emacs.d/xterm-color`
-3. Add the following to your configuration file:
+
+#### Emacs 30+
+
+1. Add a `use-package` expression like the following to your init.el.
+
 ```lisp
-;; Note that the :vc keyword requires Emacs 30+.
-;; If you have an older Emacs, you have to clone it yourself
-;;   and use :load-path to point to it.
-;; (info "(use-package) Load path")
 (use-package rmoo
   :vc (:url "https://github.com/g-gundam/rmoo" :branch "master")
   :demand t
@@ -29,6 +26,26 @@ The simplest way to install, in my opinion:
   (require 'moocode-mode)
   (require 'coldc-mode)
   (add-to-list 'auto-mode-alist '("\\.moo$" . moocode-mode)))
+```
+
+#### Emacs Before Version 30
+
+1. `git clone https://codeberg.org/ggxx/rmoo.git ~/.emacs.d/rmoo`
+2. `git clone https://github.com/atomontage/xterm-color.git ~/.emacs.d/xterm-color`
+3. Add the following to your configuration file:
+```lisp
+(add-to-list 'load-path "~/.emacs.d/xterm-color")
+(add-to-list 'load-path "~/.emacs.d/rmoo")
+(require 'rmoo-autoload)
+(require 'moocode-mode)
+(require 'coldc-mode)
+(global-set-key (kbd "C-c C-r") 'rmoo)
+(add-to-list 'auto-mode-alist '("\\.moo$" . moocode-mode))
+(add-hook
+ 'rmoo-interactive-mode-hooks
+ (lambda ()
+   (linum-mode -1)                  ;; ... no line numbers
+   (goto-address-mode t)))          ;; ... clickable links
 ```
 
 ### World Management
@@ -50,7 +67,7 @@ To connect to a world, type `M-x rmoo` (or `C-c C-r`)
 To disconnect from a world, type `M-x rmoo-quit` (or `C-c C-q`)
 
 ### Editing Code
-First, enable local editing inside your MOO: `@edito-o +local`
+First, enable local editing inside your MOO: `@edit-option +local`
 
 Once you @edit a verb, the screen will split in half with your verb code on one side and the MOO output on the other. For basic commands to use to manipulate windows, see the [Window Management](#Window-Management) section below. Here are some commands that will come in handy in the editor:
 
